@@ -1,0 +1,34 @@
+{
+  "unicode_normalization": "NFC",
+  "lowercase_for_matching": true,
+  "strip_html_for_matching": false,
+  "escape_html_for_display": true,
+  "decode_html_entities": false,
+  "trim_whitespace": true,
+
+  "tokenisation": {
+    "split_on_non_alnum": true,
+    "keep_digits": true,
+    "min_token_length": 2,
+    "remove_stopwords": true,
+    "stopwords_path": "Data/Configs/Stopwords.txt"
+  },
+
+  "algorithms": {
+    "keyword": {
+      "weight_non_stopword": 1,
+      "weight_stopword": 0,
+      "allow_phrase_boosts": false
+    },
+    "tfidf": {
+      "idf_smoothing": true,
+      "idf_formula": "log((N + 1) / (df + 1)) + 1",
+      "l2_normalize": true
+    }
+  },
+
+  "topic": {
+    "separator": "::",
+    "include_subtree": true
+  }
+}
