@@ -38,15 +38,44 @@ Install minimal dependencies for the Tools:
 pip install pandas matplotlib tabulate
 ```
 
-If you prefer to pin, add to `Tools/requirements.txt`:
-
-```
-pandas>=2.2
-matplotlib>=3.8
-tabulate>=0.9
-```
-
 `tabulate` is only needed for pretty markdown tables in `analyse.py`; without it the report falls back to plain text tables.
+
+---
+
+## Adding Decks
+
+To add new data for benchmarking, simply **export decks from Anki** in *Plain Text* format.
+
+### **Export Settings (from Anki)**
+
+When exporting decks, use the following configuration:
+
+| Option                            | Description                                        | Setting |
+| --------------------------------- | -------------------------------------------------- | ------- |
+| Include HTML and media references | Not required for text-only benchmarking            | ☐       |
+| Include tags                      | Exclude to simplify parsing                        | ☐       |
+| Include deck name                 | Required for topic grouping                        | ☑       |
+| Include note type name            | Required for consistent field mapping              | ☑       |
+| Include unique identifier         | Required to verify correctness during benchmarking | ☑       |
+
+**Format:**
+`Notes in Plain Text (.txt)`
+
+After export, place your deck files under:
+
+```
+Data/
+└── Decks/
+    ├── Deck1.txt
+    ├── Deck2.txt
+    └── ...
+```
+
+Each file will automatically be parsed and indexed using the configuration specified in:
+
+```
+Data/Configs/Parser.json
+```
 
 ---
 
@@ -198,11 +227,6 @@ Written to `Results/Bench/`:
 * Report
 
   * `report_all_seeds.md` — human-readable summary with tables and embedded figure links
-
-### Notes
-
-* If `tabulate` is installed, tables in `report_all_seeds.md` are rendered as markdown; otherwise the script falls back to plain text tables in code blocks.
-* The script explicitly sets `observed=False` in groupby and pivot operations to maintain current behavior and silence upcoming pandas deprecation warnings.
 
 ---
 
