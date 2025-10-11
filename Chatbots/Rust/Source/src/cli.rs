@@ -232,6 +232,8 @@ pub fn run() -> Result<()> {
                 candidate_cards.len(),
                 &topic_label_for_logs,
                 *argument_matches.get_one::<bool>("show_cards").unwrap_or(&false),
+                parse_milliseconds,
+                index_milliseconds,
             )?;
         }
     } else {
@@ -252,6 +254,8 @@ pub fn run() -> Result<()> {
             candidate_cards.len(),
             &topic_label_for_logs,
             *argument_matches.get_one::<bool>("show_cards").unwrap_or(&false),
+            parse_milliseconds,
+            index_milliseconds,
         )?;
     }
 
@@ -279,6 +283,8 @@ fn run_single_query(
     candidate_deck_size_for_log: usize,
     topic_text_for_log: &str,
     show_cards_flag: bool,
+    parse_milliseconds: f64,
+    index_milliseconds: f64,
 ) -> Result<()> {
     if warmup_count > 0 {
         for _ in 0..warmup_count {
@@ -338,8 +344,8 @@ fn run_single_query(
 
     if let Some(log_file_path) = log_path_option {
         let stage_timings = StageTimings {
-            parse_milliseconds: 0.0,
-            index_milliseconds: 0.0,
+            parse_milliseconds,
+            index_milliseconds,
             preprocess_milliseconds: 0.0,
             rank_milliseconds: rank_milliseconds,
             format_milliseconds: 0.0,

@@ -32,25 +32,41 @@ pub struct QueryRequest {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct StageTimings {
+    #[serde(rename = "parse")]
     pub parse_milliseconds: f64,
+    #[serde(rename = "index")]
     pub index_milliseconds: f64,
+    #[serde(rename = "preproc")]
     pub preprocess_milliseconds: f64,
+    #[serde(rename = "rank")]
     pub rank_milliseconds: f64,
+    #[serde(rename = "format")]
     pub format_milliseconds: f64,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct LogRecord {
+    #[serde(rename = "ts")]
     pub timestamp_iso: String,
-    pub language: String,   // "rust" or "python"
-    pub algorithm: String,  // "keyword" or "tfidf"
+    #[serde(rename = "lang")]
+    pub language: String,
+    #[serde(rename = "algo")]
+    pub algorithm: String,
+    #[serde(rename = "deck_size")]
     pub deck_size: usize,
+    #[serde(rename = "topic")]
     pub topic: String,
+    #[serde(rename = "query_id")]
     pub query_id: String,
+    #[serde(rename = "query")]
     pub query_text: String,
+    #[serde(rename = "stage_ms")]
     pub stage_milliseconds: StageTimings,
+    #[serde(rename = "wall_ms")]
     pub wall_milliseconds: f64,
+    #[serde(rename = "rss_kb")]
     pub rss_kilobytes: Option<u64>,
+    #[serde(rename = "top")]
     pub top: Vec<(String, f64)>,
 }
 
