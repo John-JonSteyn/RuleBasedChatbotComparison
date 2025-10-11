@@ -1,3 +1,1 @@
-python>=3.12
-rustc >= 1.77.0
-cargo >= 1.77.0
+tabulate>=0.9
