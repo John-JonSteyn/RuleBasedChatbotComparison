@@ -226,6 +226,27 @@ Written to `Results/Bench/`:
 
   * `report_all_seeds.md` — human-readable summary with tables and embedded figure links
 
+### Wall-time distribution (topic scope)
+<p align="center">
+  <img src="Results/Bench/Plots/wall_ms_box_topic.png" width="560" alt="Wall time box plot (topic scope)" />
+</p>
+
+### Stage timing breakdown (median, topic scope)
+<p align="center">
+  <img src="Results/Bench/Plots/stage_ms_stacked_topic.png" width="560" alt="Stacked median stage timings (parse/index/rank)" />
+</p>
+
+### Scalability: wall-time vs deck size (topic scope)
+<p align="center">
+  <img src="Results/Bench/Plots/scalability_wall_vs_decksize_topic.png" width="560" alt="Median wall time vs deck size" />
+</p>
+
+### Wall-time histogram (topic scope)
+<p align="center">
+  <img src="Results/Bench/Plots/wall_ms_hist_topic.png" width="560" alt="Wall time histogram (topic scope)" />
+</p>
+
+
 ---
 
 ## Reproducibility
