@@ -1,5 +1,3 @@
-# Tools/analyse.py
-
 from __future__ import annotations
 
 from pathlib import Path
@@ -19,15 +17,10 @@ REPORT_MD = RESULTS_DIR / "report_all_seeds.md"
 def _df_to_markdown_or_text(frame: pd.DataFrame) -> str:
     """Render a DataFrame as markdown if 'tabulate' is available; otherwise fall back to monospaced text."""
     try:
-        # pd.DataFrame.to_markdown requires the optional 'tabulate' package
         return frame.to_markdown(index=False)
     except Exception:
         return "```\n" + frame.to_string(index=False) + "\n```"
 
-
-# -----------------------------
-# Loading
-# -----------------------------
 
 def load_all_results(results_directory: Path) -> pd.DataFrame:
     """Load and concatenate every results_seed_*.csv into a single analysis DataFrame."""
@@ -43,12 +36,10 @@ def load_all_results(results_directory: Path) -> pd.DataFrame:
 
     combined_results = pd.concat(data_frames, ignore_index=True)
 
-    # Coerce numeric columns
     for column_name in ["wall_ms", "rank_ms", "parse_ms", "index_ms", "deck_card_count"]:
         if column_name in combined_results.columns:
             combined_results[column_name] = pd.to_numeric(combined_results[column_name], errors="coerce")
 
-    # Normalise match flag
     if "match" in combined_results.columns:
         combined_results["match_bool"] = combined_results["match"].astype(str).str.lower().eq("true")
     else:
@@ -62,16 +53,12 @@ def load_all_results(results_directory: Path) -> pd.DataFrame:
     return combined_results
 
 
-# -----------------------------
-# Aggregations (warning-free)
-# -----------------------------
-
 def aggregate_summary_all_seeds(results_frame: pd.DataFrame) -> pd.DataFrame:
     """Compute accuracy and timing percentiles per (implementation, algorithm, scope) over all seeds."""
     grouped_results = results_frame.groupby(
         ["implementation", "algorithm", "scope"],
         dropna=False,
-        observed=False,  # silence FutureWarning; keep current behavior
+        observed=False, 
     )
 
     summary_frame = grouped_results.agg(
@@ -96,10 +83,9 @@ def build_speedup_table(summary_frame: pd.DataFrame) -> pd.DataFrame:
         columns="implementation",
         values="median_wall_ms",
         aggfunc="first",
-        observed=False,  # silence FutureWarning
+        observed=False,
     )
 
-    # Keep only numeric implementation columns (protect against stray non-numeric cols)
     implementation_names = [
         column for column in wide_implementation.columns
         if pd.api.types.is_numeric_dtype(wide_implementation[column])
@@ -130,10 +116,6 @@ def collect_errors(results_frame: pd.DataFrame) -> pd.DataFrame:
     errors_frame = results_frame[results_frame["error"].fillna("").astype(str).str.len() > 0].copy()
     return errors_frame.sort_values(["implementation", "algorithm", "scope", "deck_name", "query_id"])
 
-
-# -----------------------------
-# Plots
-# -----------------------------
 
 def plot_accuracy_bar(results_frame: pd.DataFrame, scope_value: str) -> Optional[Path]:
     """Plot Accuracy@1 bar chart by implementation and algorithm for a given scope."""
@@ -284,10 +266,6 @@ def plot_wall_histograms(results_frame: pd.DataFrame, scope_value: str) -> Optio
     return output_path
 
 
-# -----------------------------
-# Report
-# -----------------------------
-
 def write_report_markdown(
     summary_frame: pd.DataFrame,
     speedup_frame: pd.DataFrame,
@@ -339,10 +317,39 @@ def write_report_markdown(
 
     output_path.write_text("\n".join(markdown_lines), encoding="utf-8")
 
+def plot_algorithmic_scaling(summary_frame: pd.DataFrame) -> Optional[Path]:
+    """Create a bar chart of TF-IDF ÷ Keyword median wall_ms per implementation."""
+    topic_only = summary_frame[summary_frame["scope"] == "topic"].copy()
+    if topic_only.empty:
+        return None
 
-# -----------------------------
-# Main
-# -----------------------------
+    pivot = topic_only.pivot_table(
+        index="implementation",
+        columns="algorithm",
+        values="median_wall_ms",
+        aggfunc="first",
+        observed=False,
+    )
+
+    if not {"keyword", "tfidf"}.issubset(pivot.columns):
+        return None
+
+    ratio = (pivot["tfidf"] / pivot["keyword"]).rename("tfidf_over_keyword").to_frame()
+
+    out_csv = RESULTS_DIR / "algorithmic_scaling.csv"
+    ratio.reset_index().to_csv(out_csv, index=False)
+
+    plt.figure()
+    ratio["tfidf_over_keyword"].plot(kind="bar")
+    plt.ylabel("Scaling ratio (TF-IDF ÷ Keyword)")
+    plt.title("Algorithmic scaling per implementation (topic scope)")
+    plt.tight_layout()
+    out_png = PLOTS_DIR / "algorithmic_scaling.png"
+    plt.savefig(out_png, dpi=150)
+    plt.close()
+
+    return out_png
+
 
 def main() -> None:
     """Load results, compute summaries, generate plots, and write a Markdown report."""
@@ -388,6 +395,11 @@ def main() -> None:
         errors_frame=errors_all_seeds_frame,
         output_path=REPORT_MD,
     )
+
+    algo_scaling_path = plot_algorithmic_scaling(summary_all_seeds_frame)
+    if algo_scaling_path:
+        print(f"Saved algorithmic scaling plot to: {algo_scaling_path}")
+        print(f"Wrote: {RESULTS_DIR / 'algorithmic_scaling.csv'}")
 
     print(f"Wrote: {SUMMARY_ALL_SEEDS_CSV}")
     print(f"Wrote: {SPEEDUP_WALL_MS_CSV}")

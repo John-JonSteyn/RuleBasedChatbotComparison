@@ -24,8 +24,8 @@ from .topics import (
     resolve_topic_string,
     collect_subtree_candidates,
 )
-from .Scoring.keyword import build_guid_index, prepare_keyword_index, score_keyword_overlap
-from .Scoring.tfidf import build_tfidf_index, score_tfidf
+from .scoring.keyword import build_guid_index, prepare_keyword_index, score_keyword_overlap
+from .scoring.tfidf import build_tfidf_index, score_tfidf
 
 # Constants
 DEFAULT_DATA_PATH = "Data/Decks"

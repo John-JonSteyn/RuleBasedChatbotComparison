@@ -1,5 +1,5 @@
 seed,implementation,algorithm,scope,queries,accuracy_at_1,median_wall_ms,p90_wall_ms,median_rank_ms,p90_rank_ms
-64,python,keyword,topic,55,0.873,0.146,0.676,0.143,0.673
-64,python,tfidf,topic,55,0.873,0.130,0.533,0.128,0.530
-64,rust,keyword,topic,55,0.964,0.501,1.705,0.501,1.705
-64,rust,tfidf,topic,55,0.964,1.333,3.989,1.332,3.989
+64,python,keyword,topic,55,0.873,0.188,0.709,0.185,0.705
+64,python,tfidf,topic,55,0.873,0.126,0.523,0.125,0.521
+64,rust,keyword,topic,55,0.964,0.493,1.775,0.493,1.775
+64,rust,tfidf,topic,55,0.964,1.264,3.886,1.264,3.886

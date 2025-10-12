@@ -6,10 +6,10 @@ This report summarises accuracy and performance across implementations and algor
 
 | implementation   | algorithm   | scope   |   queries |   accuracy_at_1 |   median_wall_ms |   p90_wall_ms |   median_rank_ms |   p90_rank_ms |
 |:-----------------|:------------|:--------|----------:|----------------:|-----------------:|--------------:|-----------------:|--------------:|
-| python           | keyword     | topic   |       165 |        0.890909 |           0.1435 |        0.681  |           0.1405 |        0.678  |
-| python           | tfidf       | topic   |       165 |        0.890909 |           0.1265 |        0.583  |           0.124  |        0.581  |
-| rust             | keyword     | topic   |       165 |        0.981818 |           0.494  |        1.8546 |           0.494  |        1.8546 |
-| rust             | tfidf       | topic   |       165 |        0.981818 |           1.294  |        3.9832 |           1.293  |        3.9832 |
+| python           | keyword     | topic   |       165 |        0.890909 |           0.142  |        0.6986 |           0.1385 |        0.6938 |
+| python           | tfidf       | topic   |       165 |        0.890909 |           0.1215 |        0.5206 |           0.1195 |        0.5186 |
+| rust             | keyword     | topic   |       165 |        0.981818 |           0.488  |        1.8398 |           0.488  |        1.8398 |
+| rust             | tfidf       | topic   |       165 |        0.981818 |           1.249  |        3.8354 |           1.249  |        3.8354 |
 
 ## Speedup Ratios (median wall_ms)
 
@@ -17,10 +17,10 @@ speedup = median_wall_ms(baseline) / median_wall_ms(contender) — larger means 
 
 | algorithm   | scope   | baseline   | contender   |    speedup |
 |:------------|:--------|:-----------|:------------|-----------:|
-| keyword     | topic   | python     | rust        |  0.290486  |
-| keyword     | topic   | rust       | python      |  3.44251   |
-| tfidf       | topic   | python     | rust        |  0.0977589 |
-| tfidf       | topic   | rust       | python      | 10.2292    |
+| keyword     | topic   | python     | rust        |  0.290984  |
+| keyword     | topic   | rust       | python      |  3.43662   |
+| tfidf       | topic   | python     | rust        |  0.0972778 |
+| tfidf       | topic   | rust       | python      | 10.2798    |
 
 ## Figures — topic scope
 

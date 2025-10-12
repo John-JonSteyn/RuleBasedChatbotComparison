@@ -1,5 +1,5 @@
 algorithm,scope,baseline,contender,speedup
-keyword,topic,python,rust,0.29048582995951416
-keyword,topic,rust,python,3.442508710801394
-tfidf,topic,python,rust,0.09775888717156105
-tfidf,topic,rust,python,10.229249011857707
+keyword,topic,python,rust,0.29098360655737704
+keyword,topic,rust,python,3.4366197183098595
+tfidf,topic,python,rust,0.09727782225780623
+tfidf,topic,rust,python,10.279835390946504

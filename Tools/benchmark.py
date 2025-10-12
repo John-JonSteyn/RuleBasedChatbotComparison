@@ -204,10 +204,10 @@ def extract_top_guid_from_jsonl(last_record: dict) -> Tuple[Optional[str], Optio
             top_guid = first[0]
 
     wall_ms = last_record.get("wall_ms") or last_record.get("wallMilliseconds")
-    stage_ms = last_record.get("stage_ms") or last_record.get("stageMilliseconds") or {}
-    parse_ms = stage_ms.get("parse") or stage_ms.get("parse_ms") or stage_ms.get("parseMilliseconds")
-    index_ms = stage_ms.get("index") or stage_ms.get("index_ms") or stage_ms.get("indexMilliseconds")
-    rank_ms = stage_ms.get("rank") or stage_ms.get("rank_ms") or stage_ms.get("rankMilliseconds")
+    stage_ms = last_record.get("stage_ms") or last_record.get("stageMilliseconds") or last_record.get("stage_milliseconds") or {}
+    parse_ms = stage_ms.get("parse") or stage_ms.get("parse_ms") or stage_ms.get("parseMilliseconds") or stage_ms.get("parse_milliseconds")
+    index_ms = stage_ms.get("index") or stage_ms.get("index_ms") or stage_ms.get("indexMilliseconds") or stage_ms.get("parse_milliseconds")
+    rank_ms = stage_ms.get("rank") or stage_ms.get("rank_ms") or stage_ms.get("rankMilliseconds") or stage_ms.get("rank_milliseconds")
 
     return top_guid, _to_float(wall_ms), _to_float(rank_ms), _to_float(parse_ms), _to_float(index_ms)
 
