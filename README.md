@@ -21,13 +21,13 @@
 
 ## Overview
 
-This repository explores **language parity and performance trade-offs** between two identical retrieval-based chatbots built with the same logic, structure, and dataset.
-Both implementations follow an identical **data contract**, enabling fair, evidence-driven benchmarking focused purely on **execution performance** rather than algorithmic differences.
+This repository explores language parity and performance trade-offs between two identical retrieval-based chatbots built with the same logic, structure, and dataset.
+Both implementations follow an identical data contract, enabling fair, evidence-driven benchmarking focused purely on execution performance rather than algorithmic differences.
 
 Each chatbot performs deterministic retrieval from deck-based question-answer datasets using:
 
-* **Keyword search** (token overlap)
-* **TF-IDF cosine similarity**
+* Keyword search (token overlap)
+* TF-IDF cosine similarity
 
 The project measures accuracy, latency, and scalability across identical conditions.
 
@@ -35,9 +35,9 @@ The project measures accuracy, latency, and scalability across identical conditi
 
 ## Objectives
 
-* Ensure **functional equivalence** between implementations by enforcing a shared parsing, tokenization, and scoring pipeline.
-* Quantify **performance differences** between languages without confounding variables.
-* Establish a **reproducible benchmark harness** for future experiments in IR (Information Retrieval) efficiency and correctness.
+* Ensure functional equivalence between implementations by enforcing a shared parsing, tokenization, and scoring pipeline.
+* Quantify performance differences between languages without confounding variables.
+* Establish a reproducible benchmark harness for future experiments in IR (Information Retrieval) efficiency and correctness.
 
 ---
 
@@ -69,7 +69,7 @@ Results/
 ## Benchmark Summary
 
 Benchmarks are deterministic per seed.
-Each run samples fixed questions from each deck and measures **median wall-time**, and **stage breakdowns**.
+Each run samples fixed questions from each deck and measures median wall-time, and stage breakdowns.
 
 ### Wall-Time Distribution
 
@@ -124,8 +124,16 @@ This will:
 
 ---
 
-
 ## Purpose
 
-This project is a **controlled comparison** of rule-based retrieval systems implemented in two different languages.
-It aims to quantify how efficiently each language executes identical logic under matched constraints, offering insights into **practical runtime trade-offs** for future AI and educational applications.
+This project presents a controlled comparison between two rule-based retrieval systems implemented in distinct programming languages.
+It evaluates how language design influences computational efficiency, development behaviour, and long-term system reliability when both are tasked with identical objectives.
+By examining execution speed, architecture, and developer experience under matched conditions, the study provides practical insight into the trade-offs between flexibility and precision that define modern software systems.
+
+---
+
+## Full Report
+
+Read the complete comparative study here:
+[ReportPythonVsRustChatbots.md](./ReportPythonVsRustChatbots.md)
+
